@@ -1,6 +1,6 @@
 package blocks
 
-//Block defines the functionality needed to preform Blockchain operations
+//Block defines the functionality needed to perform Blockchain operations
 type Block interface {
 	CaculateHash() string
 	GenerateBlock(i interface{}) (Block, error)

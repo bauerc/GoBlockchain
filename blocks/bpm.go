@@ -62,3 +62,12 @@ func (b *BPM) IsBlockValid(newBlock Block) bool {
 	log.Print("A-ok!")
 	return true
 }
+
+func BPMGenesisBlock() Block {
+	return &BPM{
+		Index:     0,
+		Timestamp: time.Now().String(),
+		BPM:       0,
+		PrevHash:  "",
+		Hash:      ""}
+}

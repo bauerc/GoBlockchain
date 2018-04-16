@@ -1,7 +1,8 @@
 package chain
 
 import (
-	"blockchain/blocks"
+	"github.com/bauerc/GoBlockchain/blocks"
+	"github.com/davecgh/go-spew/spew"
 )
 
 // Chain is the global containing the current blockchain
@@ -33,6 +34,14 @@ func (c *Chain) GenerateBlock(i interface{}) (blocks.Block, error) {
 		return nil, err
 	}
 	return newBlock, nil
+}
+
+func Genesis(genesisBlock func() blocks.Block) Blockchain {
+	var blockchain Chain
+	block := genesisBlock()
+	spew.Dump(block)
+	blockchain.AddBlock(block)
+	return &blockchain
 }
 
 // Blockchain contains blockchain implementations
