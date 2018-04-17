@@ -36,6 +36,7 @@ func (c *Chain) GenerateBlock(i interface{}) (blocks.Block, error) {
 	return newBlock, nil
 }
 
+// Genesis returns a blockchain generated with the func provided
 func Genesis(genesisBlock func() blocks.Block) Blockchain {
 	var blockchain Chain
 	block := genesisBlock()

@@ -19,7 +19,8 @@ type BPM struct {
 
 var _ Block = (*BPM)(nil)
 
-func (b *BPM) CaculateHash() string {
+// CalculateHash creates the BPM hash via fields and SHA256
+func (b *BPM) CalculateHash() string {
 	record := string(b.Index) + b.Timestamp + string(b.BPM) + b.PrevHash
 	h := sha256.New()
 	h.Write([]byte(record))
@@ -27,6 +28,7 @@ func (b *BPM) CaculateHash() string {
 	return hex.EncodeToString(hashed)
 }
 
+// GenerateBlock creates a new block from the reciever and input
 func (b *BPM) GenerateBlock(i interface{}) (Block, error) {
 	bpm, ok := i.(int)
 	if !ok {
@@ -37,10 +39,11 @@ func (b *BPM) GenerateBlock(i interface{}) (Block, error) {
 		BPM:       bpm,
 		PrevHash:  b.Hash,
 	}
-	newBlock.Hash = newBlock.CaculateHash()
+	newBlock.Hash = newBlock.CalculateHash()
 	return &newBlock, nil
 }
 
+// IsBlockValid runs validation checks against a block
 func (b *BPM) IsBlockValid(newBlock Block) bool {
 	newBPM, ok := newBlock.(*BPM)
 	if !ok {
@@ -63,6 +66,7 @@ func (b *BPM) IsBlockValid(newBlock Block) bool {
 	return true
 }
 
+// BPMGenesisBlock returns a BPM Block to start a chain
 func BPMGenesisBlock() Block {
 	return &BPM{
 		Index:     0,
